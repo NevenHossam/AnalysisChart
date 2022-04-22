@@ -9,8 +9,6 @@ import 'chart.js';
   styleUrls: ['./analytic-chart.component.css']
 })
 export class AnalyticChartComponent  {
- 
- 
   // Array of different segments in chart
   lineChartData: ChartDataSets[] = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Product A' },
