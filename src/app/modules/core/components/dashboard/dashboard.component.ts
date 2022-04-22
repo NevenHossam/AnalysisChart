@@ -45,41 +45,24 @@ export class DashboardComponent implements OnInit {
       this.selectedSchool = this.schoolsDropDownList?.dropDownListData[0] ?? '';
     localStorage.setItem('selectedSchool', this.selectedSchool);
 
-    // this.dataFilteredByDropDownLists = this.chartDataService.getFilteredObjectsFromData(this.selectedCountry, this.selectedCamp, this.selectedSchool);
-    
-    this.dataFilteredByDropDownLists = this.chartDataService.getChartListFromLocalStorage();
+    this.dataFilteredByDropDownLists = this.chartDataService.getFilteredObjectsFromData(this.selectedCountry, this.selectedCamp, this.selectedSchool);
+
+    // this.dataFilteredByDropDownLists = this.chartDataService.getChartListFromLocalStorage();
     this.chartDataService.chartList.emit(this.dataFilteredByDropDownLists);
   }
 
   listenToDDLChanges() {
     this.chartDataService.dropDownListChangedData.subscribe((res: DropDownList) => {
       if (res != undefined) {
-        switch (res.dropDownTypeToBeReflectedOn) {
-          case DropDownListTypesEnum.CampsDropDown:
-            this.setCampsForSelectedCountry(res.dropDownListData ?? []);
-
-            let firstCamp = res.dropDownListData != undefined ? res.dropDownListData[0] : '';
-            this.schoolsDropDownList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(firstCamp);
-            this.selectedSchool = this.schoolsDropDownList.dropDownListData[0] ?? '';
-            localStorage.setItem('selectedSchool', this.selectedSchool);
-            break;
-          case DropDownListTypesEnum.SchoolsDropDown:
-            this.setSchoolsForSelectedCamp(res.dropDownListData ?? []);
-            break;
-        }
-
         switch (res.dropDownTypeOfChangedDDL) {
           case DropDownListTypesEnum.CountriesDropDown:
-            this.selectedCountry = res.selectedValue ?? '';
-            localStorage.setItem('selectedCountry', this.selectedCountry);
+            this.countryChanged(res.selectedValue ?? '', res.dropDownListData ?? []);
             break;
           case DropDownListTypesEnum.CampsDropDown:
-            this.selectedCamp = res.selectedValue ?? '';
-            localStorage.setItem('selectedCamp', this.selectedCamp);
+            this.campChanged(res.selectedValue ?? '', res.dropDownListData ?? []);
             break;
           case DropDownListTypesEnum.SchoolsDropDown:
-            this.selectedSchool = res.selectedValue ?? '';
-            localStorage.setItem('selectedSchool', this.selectedSchool);
+            this.schoolChanged(res.selectedValue ?? '');
             break;
         }
 
@@ -91,12 +74,44 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  countryChanged(selectedCountry: string, campsDataList: string[]) {
+    this.selectedCountry = selectedCountry ?? '';
+    localStorage.setItem('selectedCountry', this.selectedCountry);
+
+    this.campsDropDownList.dropDownListData = campsDataList;
+    this.selectedCamp = campsDataList != undefined ? campsDataList[0] : '';
+    localStorage.setItem('selectedCamp', this.selectedCamp);
+
+    this.changeSchoolsListBasedOnCampsValue();
+  }
+
+  campChanged(selectedCamp: string, schoolsDataList: string[]) {
+    this.selectedCamp = selectedCamp ?? '';
+    localStorage.setItem('selectedCamp', this.selectedCamp);
+    this.schoolsDropDownList.dropDownListData = schoolsDataList;
+
+    this.changeSchoolsListBasedOnCampsValue();
+  }
+
+  schoolChanged(selectedSchool: string) {
+    this.selectedSchool = selectedSchool ?? '';
+    localStorage.setItem('selectedSchool', this.selectedSchool);
+  }
+
+
+  changeSchoolsListBasedOnCampsValue() {
+    this.schoolsDropDownList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(this.selectedCamp);
+    this.selectedSchool = this.schoolsDropDownList.dropDownListData[0] ?? '';
+    localStorage.setItem('selectedSchool', this.selectedSchool);
+  }
+
   getAllCountries() {
     this.countriesDropDownList.dropDownListData = this.chartDataService.getAllCountries();
   }
 
   setCampsForSelectedCountry(campsList: string[]) {
     this.campsDropDownList.dropDownListData = campsList;
+
   }
 
   setSchoolsForSelectedCamp(schoolsList: string[]) {
