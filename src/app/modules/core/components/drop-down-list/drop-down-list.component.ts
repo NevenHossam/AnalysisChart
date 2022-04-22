@@ -10,11 +10,15 @@ import { DropDownList } from '../../models/dropDownList';
 })
 export class DropDownListComponent implements OnInit {
   //props
-  @Input() dropDownList: DropDownList = { };
+  @Input() dropDownList: DropDownList = {};
 
   constructor(private chartDataService: ChartDataService) { }
 
   ngOnInit(): void {
+  }
+
+  get DropDownListTypesEnum(): typeof DropDownListTypesEnum {
+    return DropDownListTypesEnum;
   }
 
   dropDownChanged(dropDownListChangedValue: any) {
@@ -32,7 +36,7 @@ export class DropDownListComponent implements OnInit {
   }
 
   getCampsForSelectedCountry(selectedCountry: string) {
-    let campsList: DropDownList = { };
+    let campsList: DropDownList = {};
     campsList.dropDownListData = this.chartDataService.getAllCampsOfCountry(selectedCountry);
     campsList.dropDownTypeOfChangedDDL = DropDownListTypesEnum.CountriesDropDown;
     campsList.dropDownTypeToBeReflectedOn = DropDownListTypesEnum.CampsDropDown;
@@ -41,7 +45,7 @@ export class DropDownListComponent implements OnInit {
   }
 
   getSchoolsForSelectedCamp(selectedCamp: string) {
-    let schoolsList: DropDownList = { };
+    let schoolsList: DropDownList = {};
     schoolsList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(selectedCamp);
     schoolsList.dropDownTypeOfChangedDDL = DropDownListTypesEnum.CampsDropDown;
     schoolsList.dropDownTypeToBeReflectedOn = DropDownListTypesEnum.SchoolsDropDown;
@@ -50,7 +54,7 @@ export class DropDownListComponent implements OnInit {
   }
 
   schooleChanged(selectedSchool: string) {
-    let list: DropDownList = {  };
+    let list: DropDownList = {};
     list.dropDownTypeOfChangedDDL = DropDownListTypesEnum.SchoolsDropDown;
     list.selectedValue = selectedSchool;
     this.chartDataService.dropDownListChangedData.emit(list);

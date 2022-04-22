@@ -35,9 +35,17 @@ export class ChartDataService {
   //-----------------------------------------------
 
   getFilteredObjectsFromData(country: string, camp: string, school: string) {
-    let chartList = this.allData.filter(function (chartObj) {
-      return chartObj.country == country && chartObj.camp == camp && chartObj.school == school
-    });
+    let chartList: ChartObject[] = [];
+    if (school == 'Show All') {
+      chartList = this.allData.filter(function (chartObj) {
+        return chartObj.country == country && chartObj.camp == camp
+      });
+    }
+    else {
+      chartList = this.allData.filter(function (chartObj) {
+        return chartObj.country == country && chartObj.camp == camp && chartObj.school == school
+      });
+    }
     this.addChartListToLocalStorage(chartList);
     return chartList;
   }

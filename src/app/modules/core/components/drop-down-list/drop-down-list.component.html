@@ -1,4 +1,5 @@
 <select class="form-select col-md-3" aria-label="Default select example" (change)="dropDownChanged($event.target)">
   <option *ngFor="let item of dropDownList.dropDownListData" [value]="item">{{item}}
   </option>
+  <option *ngIf="dropDownList.dropDownTypeToBeReflectedOn == DropDownListTypesEnum.SchoolsDropDown" value="Show All">Show All</option>
 </select>
