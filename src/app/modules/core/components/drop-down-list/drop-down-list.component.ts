@@ -18,12 +18,15 @@ export class DropDownListComponent implements OnInit {
   }
 
   dropDownChanged(dropDownListChangedValue: any) {
-    switch (this.dropDownList.dropDownListType) {
+    switch (this.dropDownList.dropDownTypeToBeReflectedOn) {
       case DropDownListTypesEnum.CountriesDropDown:
         this.getCampsForSelectedCountry(dropDownListChangedValue.value);
         break;
       case DropDownListTypesEnum.CampsDropDown:
         this.getSchoolsForSelectedCamp(dropDownListChangedValue.value);
+        break;
+      case DropDownListTypesEnum.SchoolsDropDown:
+        this.schooleChanged(dropDownListChangedValue.value);
         break;
     }
   }
@@ -31,14 +34,25 @@ export class DropDownListComponent implements OnInit {
   getCampsForSelectedCountry(selectedCountry: string) {
     let campsList: DropDownList = {};
     campsList.dropDownListData = this.chartDataService.getAllCampsOfCountry(selectedCountry);
-    campsList.dropDownListType = DropDownListTypesEnum.CampsDropDown;
+    campsList.dropDownTypeOfChangedDDL = DropDownListTypesEnum.CountriesDropDown;
+    campsList.dropDownTypeToBeReflectedOn = DropDownListTypesEnum.CampsDropDown;
+    campsList.selectedValue = selectedCountry;
     this.chartDataService.dropDownListChangedData.emit(campsList);
   }
 
   getSchoolsForSelectedCamp(selectedCamp: string) {
     let schoolsList: DropDownList = {};
     schoolsList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(selectedCamp);
-    schoolsList.dropDownListType = DropDownListTypesEnum.SchoolsDropDown;
+    schoolsList.dropDownTypeOfChangedDDL = DropDownListTypesEnum.CampsDropDown;
+    schoolsList.dropDownTypeToBeReflectedOn = DropDownListTypesEnum.SchoolsDropDown;
+    schoolsList.selectedValue = selectedCamp;
     this.chartDataService.dropDownListChangedData.emit(schoolsList);
+  }
+
+  schooleChanged(selectedSchool: string) {
+    let list: DropDownList = {};
+    list.dropDownTypeOfChangedDDL = DropDownListTypesEnum.SchoolsDropDown;
+    list.selectedValue = selectedSchool;
+    this.chartDataService.dropDownListChangedData.emit(list);
   }
 }

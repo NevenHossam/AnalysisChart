@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DropDownListTypesEnum } from 'src/app/modules/shared/enums/dropDownListType';
 import { ChartDataService } from 'src/app/modules/shared/services/chart-data.service';
+import { ChartObject } from '../../models/chartObject';
 import { DropDownList } from '../../models/dropDownList';
 
 @Component({
@@ -10,9 +11,15 @@ import { DropDownList } from '../../models/dropDownList';
 })
 export class DashboardComponent implements OnInit {
   //props
-  countriesDropDownList: DropDownList = { dropDownListType: DropDownListTypesEnum.CountriesDropDown, dropDownListData: [] };
-  campsDropDownList: DropDownList = { dropDownListType: DropDownListTypesEnum.CampsDropDown, dropDownListData: [] };
-  schoolsDropDownList: DropDownList = { dropDownListType: DropDownListTypesEnum.SchoolsDropDown, dropDownListData: [] };
+  countriesDropDownList: DropDownList = { dropDownTypeToBeReflectedOn: DropDownListTypesEnum.CountriesDropDown, dropDownListData: [] };
+  campsDropDownList: DropDownList = { dropDownTypeToBeReflectedOn: DropDownListTypesEnum.CampsDropDown, dropDownListData: [] };
+  schoolsDropDownList: DropDownList = { dropDownTypeToBeReflectedOn: DropDownListTypesEnum.SchoolsDropDown, dropDownListData: [] };
+
+  dataFilteredByDropDownLists: ChartObject[] = [];
+
+  selectedCountry: string = '';
+  selectedCamp: string = '';
+  selectedSchool: string = '';
 
   constructor(private chartDataService: ChartDataService) { }
 
@@ -24,26 +31,30 @@ export class DashboardComponent implements OnInit {
   initializeDashBoard() {
     this.getAllCountries();
 
-    let firstCountry: string = '';
-    let firstCamp: string = '';
     if (this.countriesDropDownList.dropDownListData != undefined)
-      firstCountry = this.countriesDropDownList?.dropDownListData[0] ?? '';
+      this.selectedCountry = this.countriesDropDownList?.dropDownListData[0] ?? '';
 
-    this.campsDropDownList.dropDownListData = this.chartDataService.getAllCampsOfCountry(firstCountry);
+    this.campsDropDownList.dropDownListData = this.chartDataService.getAllCampsOfCountry(this.selectedCountry);
 
     if (this.campsDropDownList.dropDownListData != undefined)
-      firstCamp = this.campsDropDownList?.dropDownListData[0] ?? '';
+      this.selectedCamp = this.campsDropDownList?.dropDownListData[0] ?? '';
 
-    this.schoolsDropDownList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(firstCamp);
+    this.schoolsDropDownList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(this.selectedCamp);
+
+    if (this.schoolsDropDownList.dropDownListData != undefined)
+      this.selectedSchool = this.schoolsDropDownList?.dropDownListData[0] ?? '';
+
+    this.dataFilteredByDropDownLists = this.chartDataService.getFilteredObjectsFromData(this.selectedCountry, this.selectedCamp, this.selectedSchool);
+    this.chartDataService.chartList.emit(this.dataFilteredByDropDownLists);
   }
 
   listenToDDLChanges() {
     this.chartDataService.dropDownListChangedData.subscribe((res: DropDownList) => {
       if (res != undefined) {
-        switch (res.dropDownListType) {
+        switch (res.dropDownTypeToBeReflectedOn) {
           case DropDownListTypesEnum.CampsDropDown:
             this.setCampsForSelectedCountry(res.dropDownListData ?? []);
-            
+
             let firstCamp = res.dropDownListData != undefined ? res.dropDownListData[0] : '';
             this.schoolsDropDownList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(firstCamp);
             break;
@@ -51,6 +62,21 @@ export class DashboardComponent implements OnInit {
             this.setSchoolsForSelectedCamp(res.dropDownListData ?? []);
             break;
         }
+
+        switch (res.dropDownTypeOfChangedDDL) {
+          case DropDownListTypesEnum.CountriesDropDown:
+            this.selectedCountry = res.selectedValue ?? '';
+            break;
+          case DropDownListTypesEnum.CampsDropDown:
+            this.selectedCamp = res.selectedValue ?? '';
+            break;
+          case DropDownListTypesEnum.SchoolsDropDown:
+            this.selectedSchool = res.selectedValue ?? '';
+            break;
+        }
+
+        this.dataFilteredByDropDownLists = this.chartDataService.getFilteredObjectsFromData(this.selectedCountry, this.selectedCamp, this.selectedSchool);
+        this.chartDataService.chartList.emit(this.dataFilteredByDropDownLists);
       }
     }, (err) => {
 
