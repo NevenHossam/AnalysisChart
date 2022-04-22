@@ -8,6 +8,7 @@ import { AnalyticChartComponent } from './modules/core/components/analytic-chart
 import { DashboardComponent } from './modules/core/components/dashboard/dashboard.component';
 
 import { ChartsModule } from 'ng2-charts';
+import { ChartSummaryComponent } from './modules/core/components/chart-summary/chart-summary.component';
 
 
 
@@ -16,7 +17,8 @@ import { ChartsModule } from 'ng2-charts';
     AppComponent,
     DropDownListComponent,
     AnalyticChartComponent,
-    DashboardComponent
+    DashboardComponent,
+    ChartSummaryComponent
         
   ],
   imports: [  
