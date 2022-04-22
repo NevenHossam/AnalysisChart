@@ -1,15 +1,58 @@
-import { Component, OnInit } from '@angular/core';
 
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
+import { Color, Label } from 'ng2-charts';
+import 'chart.js';
 @Component({
   selector: 'app-analytic-chart',
   templateUrl: './analytic-chart.component.html',
   styleUrls: ['./analytic-chart.component.css']
 })
-export class AnalyticChartComponent implements OnInit {
+export class AnalyticChartComponent  {
+ 
+ 
+  // Array of different segments in chart
+  lineChartData: ChartDataSets[] = [
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Product A' },
+    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Product B' }
+  ];
 
-  constructor() { }
+  //Labels shown on the x-axis
+  lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
-  ngOnInit(): void {
+  // Define chart options
+  lineChartOptions: ChartOptions = {
+    responsive: true
+  };
+
+  // Define colors of chart segments
+  lineChartColors: Color[] = [
+
+    { // dark grey
+      backgroundColor: 'rgba(77,83,96,0.2)',
+      borderColor: 'rgba(77,83,96,1)',
+    },
+    { // red
+      backgroundColor: 'rgba(255,0,0,0.3)',
+      borderColor: 'red',
+    }
+  ];
+
+  // Set true to show legends
+  lineChartLegend = true;
+
+  // Define type of chart
+  lineChartType: ChartType = 'line';
+
+  lineChartPlugins = [];
+
+  // events
+  onChartClick = ($event: any) => {
+    window.console.log('onChartClick', $event);
+  };
+
+  chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
+    console.log(event, active);
   }
 
 }
