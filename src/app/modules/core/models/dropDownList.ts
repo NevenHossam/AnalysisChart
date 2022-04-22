@@ -5,6 +5,5 @@ export interface DropDownList {
     dropDownTypeOfChangedDDL?: DropDownListTypesEnum,
     dropDownTypeToBeReflectedOn?: DropDownListTypesEnum,
     dropDownListData?: string[]
-    listOfDataObjects: ChartObject[]
     selectedValue?: string,
 }
