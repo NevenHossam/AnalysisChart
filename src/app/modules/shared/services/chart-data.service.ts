@@ -15,17 +15,20 @@ export class ChartDataService {
   constructor() { }
 
   getAllCountries() {
-    return [...new Set(this.allData.map(chartObj => chartObj.country))];
+    this.addChartListToLocalStorage(this.allData);
+    return { dropDownListData: [...new Set(this.allData.map(chartObj => chartObj.country))], listOfDataObjects: this.allData };
   }
 
-  getAllCampsOfCountry(country: string) {
-    let filteredList = this.allData.filter(function (chartObj) { return chartObj.country == country });
-    return [...new Set(filteredList.map(chartObj => chartObj.camp))];
+  getAllCampsOfCountry(country: string, dataListToSearchIn: ChartObject[]) {
+    let filteredList = dataListToSearchIn.filter(function (chartObj) { return chartObj.country == country });
+    this.addChartListToLocalStorage(filteredList);
+    return { dropDownListData: [...new Set(filteredList.map(chartObj => chartObj.camp))], listOfDataObjects: filteredList };
   }
 
-  getAllSchoolsOfCamp(camp: string) {
-    let filteredList = this.allData.filter(function (chartObj) { return chartObj.camp == camp });
-    return [...new Set(filteredList.map(chartObj => chartObj.school))];
+  getAllSchoolsOfCamp(camp: string, dataListToSearchIn: ChartObject[]) {
+    let filteredList = dataListToSearchIn.filter(function (chartObj) { return chartObj.camp == camp });
+    this.addChartListToLocalStorage(filteredList);
+    return { dropDownListData: [...new Set(filteredList.map(chartObj => chartObj.school))], listOfDataObjects: filteredList };
   }
 
   //-----------------------------------------------
@@ -34,32 +37,17 @@ export class ChartDataService {
     let chartList = this.allData.filter(function (chartObj) {
       return chartObj.country == country && chartObj.camp == camp && chartObj.school == school
     });
-    localStorage.setItem('chartList', JSON.stringify(chartList));
+    this.addChartListToLocalStorage(chartList);
     return chartList;
   }
 
-  // getFilteredObjectsFromDataWithSpecificChangedType(changedValue: string, dropDownListType: DropDownListTypesEnum) {
-  //   let chartList: ChartObject[] = [];
-  //   chartList = localStorage.getItem('chartList') != null ? localStorage.getItem('chartList') : [];
+  addChartListToLocalStorage(chartList: ChartObject[]) {
+    localStorage.removeItem('chartList');
+    localStorage.setItem('chartList', JSON.stringify(chartList));
+  }
 
-  //   switch (dropDownListType) {
-  //     case DropDownListTypesEnum.CountriesDropDown:
-  //       chartList.filter(function (chartObj) {
-  //         return chartObj.country == country && chartObj.camp == camp && chartObj.school == school
-  //       });
-  //       break;
-  //     case DropDownListTypesEnum.CampsDropDown:
-  //       chartList.filter(function (chartObj) {
-  //         return chartObj.country == country && chartObj.camp == camp && chartObj.school == school
-  //       });
-  //       break;
-  //     case DropDownListTypesEnum.SchoolsDropDown:
-  //       chartList.filter(function (chartObj) {
-  //         return chartObj.country == country && chartObj.camp == camp && chartObj.school == school
-  //       });
-  //       break;
-  //   }
-
-  //   return chartList;
-  // }
+  getChartListFromLocalStorage() {
+    let jsonObj = localStorage.getItem('chartList');
+    return JSON.parse(jsonObj ?? '');
+  }
 }

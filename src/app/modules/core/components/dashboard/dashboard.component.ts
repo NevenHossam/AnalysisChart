@@ -11,9 +11,9 @@ import { DropDownList } from '../../models/dropDownList';
 })
 export class DashboardComponent implements OnInit {
   //props
-  countriesDropDownList: DropDownList = { dropDownTypeToBeReflectedOn: DropDownListTypesEnum.CountriesDropDown, dropDownListData: [] };
-  campsDropDownList: DropDownList = { dropDownTypeToBeReflectedOn: DropDownListTypesEnum.CampsDropDown, dropDownListData: [] };
-  schoolsDropDownList: DropDownList = { dropDownTypeToBeReflectedOn: DropDownListTypesEnum.SchoolsDropDown, dropDownListData: [] };
+  countriesDropDownList: DropDownList = { dropDownTypeToBeReflectedOn: DropDownListTypesEnum.CountriesDropDown, dropDownListData: [], listOfDataObjects: [] };
+  campsDropDownList: DropDownList = { dropDownTypeToBeReflectedOn: DropDownListTypesEnum.CampsDropDown, dropDownListData: [], listOfDataObjects: [] };
+  schoolsDropDownList: DropDownList = { dropDownTypeToBeReflectedOn: DropDownListTypesEnum.SchoolsDropDown, dropDownListData: [], listOfDataObjects: [] };
 
   dataFilteredByDropDownLists: ChartObject[] = [];
 
@@ -33,13 +33,16 @@ export class DashboardComponent implements OnInit {
 
     if (this.countriesDropDownList.dropDownListData != undefined)
       this.selectedCountry = this.countriesDropDownList?.dropDownListData[0] ?? '';
-
-    this.campsDropDownList.dropDownListData = this.chartDataService.getAllCampsOfCountry(this.selectedCountry);
+    let campsResult = this.chartDataService.getAllCampsOfCountry(this.selectedCountry, this.countriesDropDownList.listOfDataObjects);
+    this.campsDropDownList.dropDownListData = campsResult.dropDownListData;
+    this.campsDropDownList.listOfDataObjects = campsResult.listOfDataObjects;
 
     if (this.campsDropDownList.dropDownListData != undefined)
       this.selectedCamp = this.campsDropDownList?.dropDownListData[0] ?? '';
 
-    this.schoolsDropDownList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(this.selectedCamp);
+      let schoolsResult = this.chartDataService.getAllSchoolsOfCamp(this.selectedCamp, this.campsDropDownList.listOfDataObjects);
+      this.schoolsDropDownList.dropDownListData = schoolsResult.dropDownListData;
+      this.schoolsDropDownList.listOfDataObjects = schoolsResult.listOfDataObjects;
 
     if (this.schoolsDropDownList.dropDownListData != undefined)
       this.selectedSchool = this.schoolsDropDownList?.dropDownListData[0] ?? '';
@@ -56,7 +59,9 @@ export class DashboardComponent implements OnInit {
             this.setCampsForSelectedCountry(res.dropDownListData ?? []);
 
             let firstCamp = res.dropDownListData != undefined ? res.dropDownListData[0] : '';
-            this.schoolsDropDownList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(firstCamp);
+            let schoolsResult = this.chartDataService.getAllSchoolsOfCamp(firstCamp, this.campsDropDownList.listOfDataObjects);
+            this.schoolsDropDownList.dropDownListData = schoolsResult.dropDownListData;
+            this.schoolsDropDownList.listOfDataObjects = schoolsResult.listOfDataObjects;
             break;
           case DropDownListTypesEnum.SchoolsDropDown:
             this.setSchoolsForSelectedCamp(res.dropDownListData ?? []);
@@ -84,7 +89,9 @@ export class DashboardComponent implements OnInit {
   }
 
   getAllCountries() {
-    this.countriesDropDownList.dropDownListData = this.chartDataService.getAllCountries();
+    let countriesResult = this.chartDataService.getAllCountries();
+    this.countriesDropDownList.dropDownListData = countriesResult.dropDownListData;
+    this.countriesDropDownList.listOfDataObjects = countriesResult.listOfDataObjects;
   }
 
   setCampsForSelectedCountry(campsList: string[]) {

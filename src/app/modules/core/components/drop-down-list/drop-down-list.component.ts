@@ -10,7 +10,7 @@ import { DropDownList } from '../../models/dropDownList';
 })
 export class DropDownListComponent implements OnInit {
   //props
-  @Input() dropDownList: DropDownList = {};
+  @Input() dropDownList: DropDownList = { listOfDataObjects: [] };
 
   constructor(private chartDataService: ChartDataService) { }
 
@@ -32,8 +32,11 @@ export class DropDownListComponent implements OnInit {
   }
 
   getCampsForSelectedCountry(selectedCountry: string) {
-    let campsList: DropDownList = {};
-    campsList.dropDownListData = this.chartDataService.getAllCampsOfCountry(selectedCountry);
+    let campsList: DropDownList = { listOfDataObjects: [] };
+    let chartFilteredList = this.chartDataService.getChartListFromLocalStorage();
+    let campsResult = this.chartDataService.getAllCampsOfCountry(selectedCountry, chartFilteredList);
+    campsList.dropDownListData = campsResult.dropDownListData;
+    campsList.listOfDataObjects = campsResult.listOfDataObjects;
     campsList.dropDownTypeOfChangedDDL = DropDownListTypesEnum.CountriesDropDown;
     campsList.dropDownTypeToBeReflectedOn = DropDownListTypesEnum.CampsDropDown;
     campsList.selectedValue = selectedCountry;
@@ -41,8 +44,11 @@ export class DropDownListComponent implements OnInit {
   }
 
   getSchoolsForSelectedCamp(selectedCamp: string) {
-    let schoolsList: DropDownList = {};
-    schoolsList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(selectedCamp);
+    let chartFilteredList = this.chartDataService.getChartListFromLocalStorage();
+    let schoolsList: DropDownList = { listOfDataObjects: [] };
+    let schoolResult = this.chartDataService.getAllSchoolsOfCamp(selectedCamp, chartFilteredList);
+    schoolsList.dropDownListData = schoolResult.dropDownListData;
+    schoolsList.listOfDataObjects = schoolResult.listOfDataObjects;
     schoolsList.dropDownTypeOfChangedDDL = DropDownListTypesEnum.CampsDropDown;
     schoolsList.dropDownTypeToBeReflectedOn = DropDownListTypesEnum.SchoolsDropDown;
     schoolsList.selectedValue = selectedCamp;
@@ -50,7 +56,7 @@ export class DropDownListComponent implements OnInit {
   }
 
   schooleChanged(selectedSchool: string) {
-    let list: DropDownList = {};
+    let list: DropDownList = { listOfDataObjects: [] };
     list.dropDownTypeOfChangedDDL = DropDownListTypesEnum.SchoolsDropDown;
     list.selectedValue = selectedSchool;
     this.chartDataService.dropDownListChangedData.emit(list);
