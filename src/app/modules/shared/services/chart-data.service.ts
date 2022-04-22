@@ -16,19 +16,20 @@ export class ChartDataService {
 
   getAllCountries() {
     this.addChartListToLocalStorage(this.allData);
-    return { dropDownListData: [...new Set(this.allData.map(chartObj => chartObj.country))], listOfDataObjects: this.allData };
+    return [...new Set(this.allData.map(chartObj => chartObj.country))];
   }
 
-  getAllCampsOfCountry(country: string, dataListToSearchIn: ChartObject[]) {
-    let filteredList = dataListToSearchIn.filter(function (chartObj) { return chartObj.country == country });
+  getAllCampsOfCountry(country: string) {
+    let filteredList = this.allData.filter(function (chartObj) { return chartObj.country == country });
     this.addChartListToLocalStorage(filteredList);
-    return { dropDownListData: [...new Set(filteredList.map(chartObj => chartObj.camp))], listOfDataObjects: filteredList };
+    return [...new Set(filteredList.map(chartObj => chartObj.camp))];
   }
 
-  getAllSchoolsOfCamp(camp: string, dataListToSearchIn: ChartObject[]) {
-    let filteredList = dataListToSearchIn.filter(function (chartObj) { return chartObj.camp == camp });
+  getAllSchoolsOfCamp(camp: string) {
+    let selectedCountry = localStorage.getItem('selectedCountry');
+    let filteredList = this.allData.filter(function (chartObj) { return chartObj.camp == camp && chartObj.country == selectedCountry });
     this.addChartListToLocalStorage(filteredList);
-    return { dropDownListData: [...new Set(filteredList.map(chartObj => chartObj.school))], listOfDataObjects: filteredList };
+    return [...new Set(filteredList.map(chartObj => chartObj.school))];
   }
 
   //-----------------------------------------------

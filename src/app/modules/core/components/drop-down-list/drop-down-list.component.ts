@@ -34,9 +34,7 @@ export class DropDownListComponent implements OnInit {
   getCampsForSelectedCountry(selectedCountry: string) {
     let campsList: DropDownList = { listOfDataObjects: [] };
     let chartFilteredList = this.chartDataService.getChartListFromLocalStorage();
-    let campsResult = this.chartDataService.getAllCampsOfCountry(selectedCountry, chartFilteredList);
-    campsList.dropDownListData = campsResult.dropDownListData;
-    campsList.listOfDataObjects = campsResult.listOfDataObjects;
+    campsList.dropDownListData = this.chartDataService.getAllCampsOfCountry(selectedCountry);
     campsList.dropDownTypeOfChangedDDL = DropDownListTypesEnum.CountriesDropDown;
     campsList.dropDownTypeToBeReflectedOn = DropDownListTypesEnum.CampsDropDown;
     campsList.selectedValue = selectedCountry;
@@ -46,9 +44,7 @@ export class DropDownListComponent implements OnInit {
   getSchoolsForSelectedCamp(selectedCamp: string) {
     let chartFilteredList = this.chartDataService.getChartListFromLocalStorage();
     let schoolsList: DropDownList = { listOfDataObjects: [] };
-    let schoolResult = this.chartDataService.getAllSchoolsOfCamp(selectedCamp, chartFilteredList);
-    schoolsList.dropDownListData = schoolResult.dropDownListData;
-    schoolsList.listOfDataObjects = schoolResult.listOfDataObjects;
+    schoolsList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(selectedCamp);
     schoolsList.dropDownTypeOfChangedDDL = DropDownListTypesEnum.CampsDropDown;
     schoolsList.dropDownTypeToBeReflectedOn = DropDownListTypesEnum.SchoolsDropDown;
     schoolsList.selectedValue = selectedCamp;

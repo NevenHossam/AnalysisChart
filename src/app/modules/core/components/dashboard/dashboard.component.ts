@@ -33,21 +33,21 @@ export class DashboardComponent implements OnInit {
 
     if (this.countriesDropDownList.dropDownListData != undefined)
       this.selectedCountry = this.countriesDropDownList?.dropDownListData[0] ?? '';
-    let campsResult = this.chartDataService.getAllCampsOfCountry(this.selectedCountry, this.countriesDropDownList.listOfDataObjects);
-    this.campsDropDownList.dropDownListData = campsResult.dropDownListData;
-    this.campsDropDownList.listOfDataObjects = campsResult.listOfDataObjects;
+    localStorage.setItem('selectedCountry', this.selectedCountry);
+    this.campsDropDownList.dropDownListData = this.chartDataService.getAllCampsOfCountry(this.selectedCountry);
 
     if (this.campsDropDownList.dropDownListData != undefined)
       this.selectedCamp = this.campsDropDownList?.dropDownListData[0] ?? '';
-
-      let schoolsResult = this.chartDataService.getAllSchoolsOfCamp(this.selectedCamp, this.campsDropDownList.listOfDataObjects);
-      this.schoolsDropDownList.dropDownListData = schoolsResult.dropDownListData;
-      this.schoolsDropDownList.listOfDataObjects = schoolsResult.listOfDataObjects;
+    localStorage.setItem('selectedCamp', this.selectedCamp);
+    this.schoolsDropDownList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(this.selectedCamp);
 
     if (this.schoolsDropDownList.dropDownListData != undefined)
       this.selectedSchool = this.schoolsDropDownList?.dropDownListData[0] ?? '';
+    localStorage.setItem('selectedSchool', this.selectedSchool);
 
-    this.dataFilteredByDropDownLists = this.chartDataService.getFilteredObjectsFromData(this.selectedCountry, this.selectedCamp, this.selectedSchool);
+    // this.dataFilteredByDropDownLists = this.chartDataService.getFilteredObjectsFromData(this.selectedCountry, this.selectedCamp, this.selectedSchool);
+    
+    this.dataFilteredByDropDownLists = this.chartDataService.getChartListFromLocalStorage();
     this.chartDataService.chartList.emit(this.dataFilteredByDropDownLists);
   }
 
@@ -59,9 +59,9 @@ export class DashboardComponent implements OnInit {
             this.setCampsForSelectedCountry(res.dropDownListData ?? []);
 
             let firstCamp = res.dropDownListData != undefined ? res.dropDownListData[0] : '';
-            let schoolsResult = this.chartDataService.getAllSchoolsOfCamp(firstCamp, this.campsDropDownList.listOfDataObjects);
-            this.schoolsDropDownList.dropDownListData = schoolsResult.dropDownListData;
-            this.schoolsDropDownList.listOfDataObjects = schoolsResult.listOfDataObjects;
+            this.schoolsDropDownList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(firstCamp);
+            this.selectedSchool = this.schoolsDropDownList.dropDownListData[0] ?? '';
+            localStorage.setItem('selectedSchool', this.selectedSchool);
             break;
           case DropDownListTypesEnum.SchoolsDropDown:
             this.setSchoolsForSelectedCamp(res.dropDownListData ?? []);
@@ -71,12 +71,15 @@ export class DashboardComponent implements OnInit {
         switch (res.dropDownTypeOfChangedDDL) {
           case DropDownListTypesEnum.CountriesDropDown:
             this.selectedCountry = res.selectedValue ?? '';
+            localStorage.setItem('selectedCountry', this.selectedCountry);
             break;
           case DropDownListTypesEnum.CampsDropDown:
             this.selectedCamp = res.selectedValue ?? '';
+            localStorage.setItem('selectedCamp', this.selectedCamp);
             break;
           case DropDownListTypesEnum.SchoolsDropDown:
             this.selectedSchool = res.selectedValue ?? '';
+            localStorage.setItem('selectedSchool', this.selectedSchool);
             break;
         }
 
@@ -89,9 +92,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getAllCountries() {
-    let countriesResult = this.chartDataService.getAllCountries();
-    this.countriesDropDownList.dropDownListData = countriesResult.dropDownListData;
-    this.countriesDropDownList.listOfDataObjects = countriesResult.listOfDataObjects;
+    this.countriesDropDownList.dropDownListData = this.chartDataService.getAllCountries();
   }
 
   setCampsForSelectedCountry(campsList: string[]) {
