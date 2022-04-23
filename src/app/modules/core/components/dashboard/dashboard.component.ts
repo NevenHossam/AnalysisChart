@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit, AfterContentChecked {
     window.setTimeout(() => {
       this.chartDataService.chartList.emit(this.dataFilteredByDropDownLists);
       this.chartDataService.getChartDataListSummary(this.dataFilteredByDropDownLists);
-    }, 500);
+    }, 100);
   }
 
   ngAfterContentChecked(): void {
@@ -56,11 +56,13 @@ export class DashboardComponent implements OnInit, AfterContentChecked {
       localStorage.setItem('selectedCamp', this.selectedCamp);
     }
     this.schoolsDropDownList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(this.selectedCamp);
+    // this.schoolsDropDownList.dropDownListData.push('Show All');
 
     this.selectedSchool = localStorage.getItem('selectedSchool') ?? '';
     if (this.selectedSchool == '') {
-      if (this.schoolsDropDownList.dropDownListData != undefined)
-        this.selectedSchool = this.schoolsDropDownList?.dropDownListData[0] ?? '';
+      // if (this.schoolsDropDownList.dropDownListData != undefined)
+      //   this.selectedSchool = this.schoolsDropDownList?.dropDownListData[0] ?? '';
+      this.selectedSchool = 'Show All';
       localStorage.setItem('selectedSchool', this.selectedSchool);
     }
 
@@ -115,10 +117,10 @@ export class DashboardComponent implements OnInit, AfterContentChecked {
     localStorage.setItem('selectedSchool', this.selectedSchool);
   }
 
-
   changeSchoolsListBasedOnCampsValue() {
     this.schoolsDropDownList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(this.selectedCamp);
-    this.selectedSchool = this.schoolsDropDownList.dropDownListData[0] ?? '';
+    // this.selectedSchool = this.schoolsDropDownList.dropDownListData[0] ?? '';
+    this.selectedSchool = 'Show All';
     localStorage.setItem('selectedSchool', this.selectedSchool);
   }
 
@@ -128,7 +130,6 @@ export class DashboardComponent implements OnInit, AfterContentChecked {
 
   setCampsForSelectedCountry(campsList: string[]) {
     this.campsDropDownList.dropDownListData = campsList;
-
   }
 
   setSchoolsForSelectedCamp(schoolsList: string[]) {
