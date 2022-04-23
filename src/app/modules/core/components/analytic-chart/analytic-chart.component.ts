@@ -45,7 +45,7 @@ export class AnalyticChartComponent implements OnInit {
 
     if (this.dataFilteredByDropDownLists.length > 0) {
       let list = this.dataFilteredByDropDownLists.map(obj => {
-        return ({ data: obj.lessons, label: obj.school, month: obj.month });
+        return ({ data: { x: obj.month, y: obj.lessons }, label: obj.school, month: obj.month });
       });
 
       chartMappedList.push({ data: [list[0].data], label: list[0].label });
