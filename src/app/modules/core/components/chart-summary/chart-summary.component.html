@@ -1,14 +1,14 @@
 <div>
-    <h1>{{totalNumberOfLessons}} Lessons</h1>
-    <h6>in {{selectedCamp}}</h6>
+    <h1>{{summaryChart.totalNumberOfLessons}} Lessons</h1>
+    <h6>in {{summaryChart.selectedCamp}}</h6>
 </div>
 
-<div *ngFor="let item of campWithLessons">
+<div *ngFor="let item of summaryChart.schoolWithLesson">
     <div>
         <span>
             <button>btn</button>
         </span>
-        <span>{{item.lessons}} Lessons</span>
+        <span>{{item.totalLessonsNumberOfThisSchool}} Lessons</span>
     </div>
-    <div>in {{item.school}}</div>
+    <div>in {{item.schoolName}}</div>
 </div>

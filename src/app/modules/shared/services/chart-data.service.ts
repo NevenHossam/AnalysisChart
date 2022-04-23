@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ChartObject } from '../../core/models/chartObject';
+import { ChartSummary } from '../../core/models/chartSummary';
 import { DropDownList } from '../../core/models/dropDownList';
 import chartData from '../data/data.json';
 import { DropDownListTypesEnum } from '../enums/dropDownListType';
@@ -11,6 +12,7 @@ export class ChartDataService {
   allData: ChartObject[] = chartData;
   @Output() dropDownListChangedData: EventEmitter<DropDownList> = new EventEmitter();
   @Output() chartList: EventEmitter<ChartObject[]> = new EventEmitter();
+  @Output() chartSummary: EventEmitter<ChartSummary> = new EventEmitter();
 
   constructor() { }
 
@@ -58,5 +60,37 @@ export class ChartDataService {
   getChartListFromLocalStorage() {
     let jsonObj = localStorage.getItem('chartList');
     return JSON.parse(jsonObj ?? '');
+  }
+
+  getChartDataListSummary(dataFilteredByDropDownLists: ChartObject[]) {
+    let ChartSummary: ChartSummary = {
+      schoolWithLesson: [],
+      selectedCamp: localStorage.getItem('selectedCamp') ?? '',
+      totalNumberOfLessons: 0
+    };
+
+    if (dataFilteredByDropDownLists.length > 0) {
+      ChartSummary?.schoolWithLesson?.push({
+        schoolName: dataFilteredByDropDownLists[0].school,
+        totalLessonsNumberOfThisSchool: dataFilteredByDropDownLists[0].lessons
+      });
+      ChartSummary.totalNumberOfLessons = dataFilteredByDropDownLists[0].lessons;
+
+      for (let i = 1; i < dataFilteredByDropDownLists.length; i++) {
+        ChartSummary.totalNumberOfLessons += dataFilteredByDropDownLists[i].lessons;
+        let index = ChartSummary.schoolWithLesson?.findIndex(l => l?.schoolName == dataFilteredByDropDownLists[i].school);
+        if (index != undefined)
+          if (index >= 0) {
+            ChartSummary.schoolWithLesson[index].totalLessonsNumberOfThisSchool += dataFilteredByDropDownLists[i].lessons;
+          }
+          else
+            ChartSummary.schoolWithLesson.push({
+              schoolName: dataFilteredByDropDownLists[i].school,
+              totalLessonsNumberOfThisSchool: dataFilteredByDropDownLists[i].lessons
+            });
+      }
+    }
+
+    this.chartSummary.emit(ChartSummary);
   }
 }

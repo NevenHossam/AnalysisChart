@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DropDownListTypesEnum } from 'src/app/modules/shared/enums/dropDownListType';
 import { ChartDataService } from 'src/app/modules/shared/services/chart-data.service';
 import { ChartObject } from '../../models/chartObject';
+import { ChartSummary } from '../../models/chartSummary';
 import { DropDownList } from '../../models/dropDownList';
 
 @Component({
@@ -49,6 +50,7 @@ export class DashboardComponent implements OnInit {
 
     // this.dataFilteredByDropDownLists = this.chartDataService.getChartListFromLocalStorage();
     this.chartDataService.chartList.emit(this.dataFilteredByDropDownLists);
+    this.chartDataService.getChartDataListSummary(this.dataFilteredByDropDownLists);
   }
 
   listenToDDLChanges() {
@@ -68,6 +70,7 @@ export class DashboardComponent implements OnInit {
 
         this.dataFilteredByDropDownLists = this.chartDataService.getFilteredObjectsFromData(this.selectedCountry, this.selectedCamp, this.selectedSchool);
         this.chartDataService.chartList.emit(this.dataFilteredByDropDownLists);
+        this.chartDataService.getChartDataListSummary(this.dataFilteredByDropDownLists);
       }
     }, (err) => {
 
