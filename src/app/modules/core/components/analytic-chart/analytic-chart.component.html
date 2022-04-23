@@ -1,5 +1,6 @@
 <div class="chartjs-container">
   <canvas baseChart 
+      id="lineChart"
       [datasets]="lineChartData" 
       [labels]="lineChartLabels" 
       [options]="lineChartOptions"
@@ -8,7 +9,7 @@
       [chartType]="lineChartType" 
       [plugins]="lineChartPlugins"
      
-      (chartClick)="onChartClick($event)"
+      (click)="onChartClick(this)"
       >
   </canvas>
 </div>
