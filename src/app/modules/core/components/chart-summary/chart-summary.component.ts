@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chart-summary.component.css']
 })
 export class ChartSummaryComponent implements OnInit {
+  totalNumberOfLessons = 50;
+  selectedCamp = 'neven';
+  campWithLessons = [{ lessons: 10, school: 'test' }];
 
   constructor() { }
 
