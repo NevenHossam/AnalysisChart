@@ -6,7 +6,7 @@
 <div *ngFor="let item of summaryChart.schoolWithLesson">
     <div>
         <span>
-            <button>btn</button>
+            <button (click)="ShowOrHideChartLine(item.schoolName)">btn</button>
         </span>
         <span>{{item.totalLessonsNumberOfThisSchool}} Lessons</span>
     </div>

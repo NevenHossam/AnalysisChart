@@ -12,6 +12,7 @@ export class ChartDataService {
   allData: ChartObject[] = chartData;
   @Output() dropDownListChangedData: EventEmitter<DropDownList> = new EventEmitter();
   @Output() chartList: EventEmitter<ChartObject[]> = new EventEmitter();
+  @Output() labelToHideOrToShow = new EventEmitter(); 
   @Output() chartSummary: EventEmitter<ChartSummary> = new EventEmitter();
 
   constructor() { }

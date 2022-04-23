@@ -9,6 +9,7 @@ import { ChartSummary } from '../../models/chartSummary';
 })
 export class ChartSummaryComponent implements OnInit {
   summaryChart!: ChartSummary;
+  lineChartData: any;
 
   constructor(private chartDataService: ChartDataService) { }
 
@@ -26,4 +27,10 @@ export class ChartSummaryComponent implements OnInit {
       }
     });
   }
+
+  ShowOrHideChartLine(schoolName: string) {
+    this.chartDataService.labelToHideOrToShow.emit(schoolName);
+  }
+
+
 }
