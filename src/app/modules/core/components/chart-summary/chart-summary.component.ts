@@ -8,7 +8,11 @@ import { ChartSummary } from '../../models/chartSummary';
   styleUrls: ['./chart-summary.component.css']
 })
 export class ChartSummaryComponent implements OnInit {
-  summaryChart!: ChartSummary;
+  summaryChart: ChartSummary = {
+    totalNumberOfLessons: 0,
+    selectedCamp: '',
+    schoolWithLesson: [],
+  };
   lineChartData: any;
 
   constructor(private chartDataService: ChartDataService) { }

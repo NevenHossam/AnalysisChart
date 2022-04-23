@@ -1,6 +1,6 @@
 <button (click)="changeCanvasColor()">change colour</button>
 
-<div class="chartjs-container">
+<div class="chartjs-container" width="100%" height="20%">
   <!-- <canvas baseChart 
       id="lineChart"
       [datasets]="lineChartData" 
@@ -11,9 +11,10 @@
       [chartType]="lineChartType" 
       [plugins]="lineChartPlugins"
      
-      (click)="onChartClick(this)"
+      width="100%" height="60" 
+      (chartClick)="onChartClick(this)"
       >
   </canvas> -->
 
-  <canvas  id="lineChart" width="100%" height="60" (click)="onChartClick($event)"></canvas>
+  <canvas baseChart id="lineChart" (click)="onChartClick($event)"></canvas>
 </div>

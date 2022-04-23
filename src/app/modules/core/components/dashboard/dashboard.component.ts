@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentChecked, AfterViewChecked, AfterViewInit, Component, OnInit } from '@angular/core';
 import { DropDownListTypesEnum } from 'src/app/modules/shared/enums/dropDownListType';
 import { ChartDataService } from 'src/app/modules/shared/services/chart-data.service';
 import { ChartObject } from '../../models/chartObject';
@@ -10,7 +10,7 @@ import { DropDownList } from '../../models/dropDownList';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterContentChecked {
   //props
   countriesDropDownList: DropDownList = { dropDownTypeToBeReflectedOn: DropDownListTypesEnum.CountriesDropDown, dropDownListData: [] };
   campsDropDownList: DropDownList = { dropDownTypeToBeReflectedOn: DropDownListTypesEnum.CampsDropDown, dropDownListData: [] };
@@ -27,6 +27,15 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.initializeDashBoard();
     this.listenToDDLChanges();
+
+    window.setTimeout(() => {
+      this.chartDataService.chartList.emit(this.dataFilteredByDropDownLists);
+      this.chartDataService.getChartDataListSummary(this.dataFilteredByDropDownLists);
+    }, 500);
+  }
+
+  ngAfterContentChecked(): void {
+
   }
 
   initializeDashBoard() {
@@ -47,10 +56,6 @@ export class DashboardComponent implements OnInit {
     localStorage.setItem('selectedSchool', this.selectedSchool);
 
     this.dataFilteredByDropDownLists = this.chartDataService.getFilteredObjectsFromData(this.selectedCountry, this.selectedCamp, this.selectedSchool);
-
-    // this.dataFilteredByDropDownLists = this.chartDataService.getChartListFromLocalStorage();
-    this.chartDataService.chartList.emit(this.dataFilteredByDropDownLists);
-    this.chartDataService.getChartDataListSummary(this.dataFilteredByDropDownLists);
   }
 
   listenToDDLChanges() {

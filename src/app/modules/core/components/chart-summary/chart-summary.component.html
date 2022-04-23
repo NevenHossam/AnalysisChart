@@ -1,14 +1,16 @@
-<div>
-    <h1>{{summaryChart.totalNumberOfLessons}} Lessons</h1>
-    <h6>in {{summaryChart.selectedCamp}}</h6>
-</div>
-
-<div *ngFor="let item of summaryChart.schoolWithLesson">
+<div *ngIf="summaryChart.schoolWithLesson!=[]">
     <div>
-        <span>
-            <button (click)="ShowOrHideChartLine(item.schoolName)">btn</button>
-        </span>
-        <span>{{item.totalLessonsNumberOfThisSchool}} Lessons</span>
+        <h1>{{summaryChart?.totalNumberOfLessons}} Lessons</h1>
+        <h6>in {{summaryChart?.selectedCamp}}</h6>
     </div>
-    <div>in {{item.schoolName}}</div>
+
+    <div *ngFor="let item of summaryChart?.schoolWithLesson">
+        <div>
+            <span>
+                <button (click)="ShowOrHideChartLine(item.schoolName)">btn</button>
+            </span>
+            <span>{{item.totalLessonsNumberOfThisSchool}} Lessons</span>
+        </div>
+        <div>in {{item.schoolName}}</div>
+    </div>
 </div>

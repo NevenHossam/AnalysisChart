@@ -37,7 +37,7 @@ export class AnalyticChartComponent implements OnInit {
         labels: this.lineChartLabels,
         datasets: this.lineChartData
       },
-      options: this.lineChartOptions
+      options: this.lineChartOptions,
     });
   }
 
@@ -153,9 +153,9 @@ export class AnalyticChartComponent implements OnInit {
           let pointWithLabel = this.lineChart.data.datasets[clickedPoint._datasetIndex];
           if (pointWithLabel.data != undefined)
             labelOfClickedPoint = pointWithLabel.data[clickedPoint._index];
-       
-            this.router.navigateByUrl(`chartPointDetails/${labelOfClickedPoint.id}`);
-          }
+
+          this.router.navigateByUrl(`chartPointDetails/${labelOfClickedPoint.id}`);
+        }
       }
     }
   };
