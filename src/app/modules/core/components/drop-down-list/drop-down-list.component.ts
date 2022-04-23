@@ -16,6 +16,14 @@ export class DropDownListComponent implements OnInit {
   constructor(private chartDataService: ChartDataService) { }
 
   ngOnInit(): void {
+    this.setSelectedValue();
+  }
+
+  get DropDownListTypesEnum(): typeof DropDownListTypesEnum {
+    return DropDownListTypesEnum;
+  }
+
+  setSelectedValue(){
     switch (this.dropDownList.dropDownTypeToBeReflectedOn) {
       case DropDownListTypesEnum.CountriesDropDown:
         this.selectedValue = localStorage.getItem('selectedCountry') ?? '';
@@ -27,10 +35,6 @@ export class DropDownListComponent implements OnInit {
         this.selectedValue = localStorage.getItem('selectedSchool') ?? '';
         break;
     }
-  }
-
-  get DropDownListTypesEnum(): typeof DropDownListTypesEnum {
-    return DropDownListTypesEnum;
   }
 
   dropDownChanged(dropDownListChangedValue: any) {
@@ -46,6 +50,7 @@ export class DropDownListComponent implements OnInit {
         this.schooleChanged(dropDownListChangedValue.value);
         break;
     }
+    this.setSelectedValue();
   }
 
   getCampsForSelectedCountry(selectedCountry: string) {

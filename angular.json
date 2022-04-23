@@ -35,7 +35,8 @@
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",
               "./node_modules/chart.js/dist/Chart.min.js",
-              "./node_modules/chart.js/dist/Chart.bundle.min.js"
+              "./node_modules/chart.js/dist/Chart.bundle.min.js",
+              "./node_modules/angular-dark-mode/angular-dark-mode.js"
             ],
             "allowedCommonJsDependencies": [
               "chart.js"
@@ -108,8 +109,11 @@
               "./node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.js"
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "./node_modules/chart.js/dist/Chart.min.js",
+              "./node_modules/chart.js/dist/Chart.bundle.min.js",
+              "./node_modules/angular-dark-mode/angular-dark-mode.js"
             ]
           }
         }

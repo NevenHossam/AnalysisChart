@@ -1,3 +1,4 @@
 <div class="container">
+    <input type="checkbox" [checked]="darkMode$ | async" (change)="toggleTheme()" />
     <router-outlet></router-outlet>
 </div>
