@@ -160,22 +160,6 @@ export class AnalyticChartComponent implements OnInit {
     }
   };
 
-
-  chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
-  }
-
-  changeCanvasColor() {
-    // this.lineChartOptions.elements.rectangle.backgroundColor = 'red';
-    this.lineChart.update();
-  }
-
-  // updateChart(){
-  //   Chart.helpers.each(Chart.instances, function(instance){
-  //     instance.chart.update();
-  //   });
-  // }
-
   showOrHideLineInChart() {
     this.chartDataService.labelToHideOrToShow.subscribe((res: string) => {
       let choosenLabelIndex = this.lineChartData.findIndex(d => d.label == res);
