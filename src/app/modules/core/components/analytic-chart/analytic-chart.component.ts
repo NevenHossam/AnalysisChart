@@ -148,8 +148,6 @@ export class AnalyticChartComponent implements OnInit {
     let clickedPoint = activatedPoints[0];
     let labelOfClickedPoint: any;
     if (clickedPoint) {
-      // if (this.lineChart.data.labels != undefined)
-      //   var label = this.lineChart.data.labels[clickedPoint._index];
       if (this.lineChart.data.datasets != undefined) {
         if (this.lineChart.data.datasets[clickedPoint?._datasetIndex] != undefined) {
           let pointWithLabel = this.lineChart.data.datasets[clickedPoint._datasetIndex];
