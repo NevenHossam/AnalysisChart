@@ -6,7 +6,7 @@ import { DashboardComponent } from './modules/core/components/dashboard/dashboar
 const routes: Routes = [
   {path: '', component:DashboardComponent},
   {path: 'dashboard', redirectTo:''},
-  {path: 'chartPointDetails', component: ChartPointDetailsComponent}
+  {path: 'chartPointDetails/:id', component: ChartPointDetailsComponent}
 ];
 
 @NgModule({

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ChartDataService } from 'src/app/modules/shared/services/chart-data.service';
 import { ChartObject } from '../../models/chartObject';
 
@@ -17,18 +18,17 @@ export class ChartPointDetailsComponent implements OnInit {
     month: ''
   };
 
-  constructor(private chartDataService: ChartDataService) { }
+  constructor(private chartDataService: ChartDataService,   private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getPointDetails();
+    let id = this.route?.snapshot?.paramMap?.get('id') ?? '';
+    this.getPointDetails(id);
   }
 
-  getPointDetails() {
-    this.chartDataService.pointInLineClickedInChart.subscribe((res: any) => {
+  getPointDetails(id:string) {
       let chartList: ChartObject[] = this.chartDataService.getChartListFromLocalStorage();
-      let chartPoint = chartList.find(d => d.school == res.label && d.month == res.x && d.lessons == res.y);
+      let chartPoint = chartList.find(d => d.id == id);
       if (chartPoint)
         this.chartPointDetails = chartPoint;
-    });
   }
 }

@@ -64,7 +64,7 @@ export class AnalyticChartComponent implements OnInit {
 
     if (this.dataFilteredByDropDownLists.length > 0) {
       let list = this.dataFilteredByDropDownLists.map(obj => {
-        return ({ data: { x: obj.month, y: obj.lessons, id: obj.school }, label: obj.school });
+        return ({ data: { x: obj.month, y: obj.lessons, id: obj.id }, label: obj.school });
       });
 
       chartMappedList.push({ data: [list[0].data], label: list[0].label, hidden: false });
@@ -156,8 +156,7 @@ export class AnalyticChartComponent implements OnInit {
           if (pointWithLabel.data != undefined)
             labelOfClickedPoint = pointWithLabel.data[clickedPoint._index];
        
-            this.chartDataService.pointInLineClickedInChart.emit({ label: pointWithLabel.label, x: labelOfClickedPoint.x, y: labelOfClickedPoint.y });
-            this.router.navigateByUrl('chartPointDetails');
+            this.router.navigateByUrl(`chartPointDetails/${labelOfClickedPoint.id}`);
           }
       }
     }
