@@ -6,6 +6,7 @@ import 'chart.js';
 import { ChartObject } from '../../models/chartObject';
 import { ChartDataService } from 'src/app/modules/shared/services/chart-data.service';
 import { chart } from 'highcharts';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-analytic-chart',
   templateUrl: './analytic-chart.component.html',
@@ -19,7 +20,7 @@ export class AnalyticChartComponent implements OnInit {
   lineChartData: ChartDataSets[] = [];
   lineChart!: Chart;
 
-  constructor(private chartDataService: ChartDataService) { }
+  constructor(private chartDataService: ChartDataService, private router: Router) { }
 
   ngOnInit(): void {
     this.selectedCountryName = localStorage.getItem('selectedCountry') ?? '';
@@ -86,6 +87,10 @@ export class AnalyticChartComponent implements OnInit {
   lineChartOptions: ChartOptions = {
     responsive: true,
     responsiveAnimationDuration: 500,
+    tooltips: {
+      enabled: false,
+      // intersect: true,
+    },
     title: {
       text: this.selectedCountryName
     },
@@ -150,10 +155,11 @@ export class AnalyticChartComponent implements OnInit {
           let pointWithLabel = this.lineChart.data.datasets[clickedPoint._datasetIndex];
           if (pointWithLabel.data != undefined)
             labelOfClickedPoint = pointWithLabel.data[clickedPoint._index];
-          this.chartDataService.pointInLineClickedInChart.emit({ label: pointWithLabel.label, x: labelOfClickedPoint.x, y: labelOfClickedPoint.y });
-        }
+       
+            this.chartDataService.pointInLineClickedInChart.emit({ label: pointWithLabel.label, x: labelOfClickedPoint.x, y: labelOfClickedPoint.y });
+            this.router.navigateByUrl('chartPointDetails');
+          }
       }
-
     }
   };
 
