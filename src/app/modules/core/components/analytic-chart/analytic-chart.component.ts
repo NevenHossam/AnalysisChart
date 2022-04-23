@@ -72,8 +72,8 @@ export class AnalyticChartComponent implements OnInit {
 
       chartMappedList.push({ data: [list[0].data], label: list[0].label, hidden: false, fill: false, tension: 0.1, borderColor: randomColor });
       for (let i = 1; i < list.length; i++) {
-         randomColor = this.getRandomColor();
-        while(this.colorsList.findIndex(c=>c==randomColor)>=0) {
+        randomColor = this.getRandomColor();
+        while (this.colorsList.findIndex(c => c == randomColor) >= 0) {
           randomColor = this.getRandomColor();
         }
         this.colorsList.push(randomColor);
@@ -182,18 +182,10 @@ export class AnalyticChartComponent implements OnInit {
     this.chartDataService.labelToHideOrToShow.subscribe((res: string) => {
       let choosenLabelIndex = this.lineChartData.findIndex(d => d.label == res);
       if (this.lineChartData[choosenLabelIndex].hidden == false) {
-        this.lineChartData[choosenLabelIndex] = {
-          data: this.lineChartData[choosenLabelIndex].data,
-          label: this.lineChartData[choosenLabelIndex].label,
-          hidden: true
-        }
+        this.lineChartData[choosenLabelIndex].hidden = true;
       }
       else {
-        this.lineChartData[choosenLabelIndex] = {
-          data: this.lineChartData[choosenLabelIndex].data,
-          label: this.lineChartData[choosenLabelIndex].label,
-          hidden: false
-        }
+        this.lineChartData[choosenLabelIndex].hidden = false;
       }
       this.lineChart.update();
       this.lineChart.render();
