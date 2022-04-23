@@ -1,16 +1,14 @@
-<div *ngIf="summaryChart.schoolWithLesson!=[]">
-    <div>
-        <h1>{{summaryChart?.totalNumberOfLessons}} Lessons</h1>
-        <h6>in {{summaryChart?.selectedCamp}}</h6>
-    </div>
-
-    <div *ngFor="let item of summaryChart?.schoolWithLesson">
-        <div>
+<div class="card" *ngIf="summaryChart.schoolWithLesson!=[]">
+    <div class="card-body">
+        <h5 class="card-title text-center">{{summaryChart?.totalNumberOfLessons}} Lessons</h5>
+        <h6 class="card-title text-center">in {{summaryChart?.selectedCamp}}</h6>
+        <hr>
+        <div *ngFor="let item of summaryChart?.schoolWithLesson">
             <span>
-                <button (click)="ShowOrHideChartLine(item.schoolName)">btn</button>
+                <input type="radio" (click)="ShowOrHideChartLine(item.schoolName)">
+                <p class="card-text">{{item.totalLessonsNumberOfThisSchool}} Lessons</p>
             </span>
-            <span>{{item.totalLessonsNumberOfThisSchool}} Lessons</span>
+            <p class="card-text">in {{item.schoolName}}</p>
         </div>
-        <div>in {{item.schoolName}}</div>
     </div>
 </div>
