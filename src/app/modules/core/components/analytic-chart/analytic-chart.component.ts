@@ -5,7 +5,7 @@ import { Color, Label } from 'ng2-charts';
 import 'chart.js';
 import { ChartObject } from '../../models/chartObject';
 import { ChartDataService } from 'src/app/modules/shared/services/chart-data.service';
-import { chart } from 'highcharts';
+import { chart, color } from 'highcharts';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-analytic-chart',
@@ -19,6 +19,7 @@ export class AnalyticChartComponent implements OnInit {
   lineChartLabels: Label[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   lineChartData: ChartDataSets[] = [];
   lineChart!: Chart;
+  colorsList: string[] = [];
 
   constructor(private chartDataService: ChartDataService, private router: Router) { }
 
@@ -61,26 +62,43 @@ export class AnalyticChartComponent implements OnInit {
 
   mapListIntoChartDataSets() {
     let chartMappedList = [];
+    this.colorsList = [];
 
     if (this.dataFilteredByDropDownLists.length > 0) {
+      let randomColor = this.getRandomColor();
       let list = this.dataFilteredByDropDownLists.map(obj => {
         return ({ data: { x: obj.month, y: obj.lessons, id: obj.id }, label: obj.school });
       });
 
-      chartMappedList.push({ data: [list[0].data], label: list[0].label, hidden: false });
+      chartMappedList.push({ data: [list[0].data], label: list[0].label, hidden: false, fill: false, tension: 0.1, borderColor: randomColor });
       for (let i = 1; i < list.length; i++) {
+         randomColor = this.getRandomColor();
+        while(this.colorsList.findIndex(c=>c==randomColor)>=0) {
+          randomColor = this.getRandomColor();
+        }
+        this.colorsList.push(randomColor);
+
         let index = chartMappedList.findIndex(l => l?.label == list[i].label);
         if (index >= 0 && index != undefined) {
           chartMappedList[index]?.data.push(list[i].data);
         }
         else
-          chartMappedList.push({ data: [list[i].data], label: list[i].label, hidden: false });
+          chartMappedList.push({ data: [list[i].data], label: list[i].label, hidden: false, fill: false, tension: 0.1, borderColor: randomColor });
       }
       this.lineChartData = chartMappedList;
     }
     else this.lineChartData = [];
 
     this.createChart();
+  }
+
+  getRandomColor() {
+    let letters = '0123456789ABCDEF';
+    let color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
   }
 
   // Define chart options
