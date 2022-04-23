@@ -41,19 +41,28 @@ export class DashboardComponent implements OnInit, AfterContentChecked {
   initializeDashBoard() {
     this.getAllCountries();
 
-    if (this.countriesDropDownList.dropDownListData != undefined)
-      this.selectedCountry = this.countriesDropDownList?.dropDownListData[0] ?? '';
-    localStorage.setItem('selectedCountry', this.selectedCountry);
+    this.selectedCountry = localStorage.getItem('selectedCountry') ?? '';
+    if (this.selectedCountry == '') {
+      if (this.countriesDropDownList.dropDownListData != undefined)
+        this.selectedCountry = this.countriesDropDownList?.dropDownListData[0] ?? '';
+      localStorage.setItem('selectedCountry', this.selectedCountry);
+    }
     this.campsDropDownList.dropDownListData = this.chartDataService.getAllCampsOfCountry(this.selectedCountry);
 
-    if (this.campsDropDownList.dropDownListData != undefined)
-      this.selectedCamp = this.campsDropDownList?.dropDownListData[0] ?? '';
-    localStorage.setItem('selectedCamp', this.selectedCamp);
+    this.selectedCamp = localStorage.getItem('selectedCamp') ?? '';
+    if (this.selectedCamp == '') {
+      if (this.campsDropDownList.dropDownListData != undefined)
+        this.selectedCamp = this.campsDropDownList?.dropDownListData[0] ?? '';
+      localStorage.setItem('selectedCamp', this.selectedCamp);
+    }
     this.schoolsDropDownList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(this.selectedCamp);
 
-    if (this.schoolsDropDownList.dropDownListData != undefined)
-      this.selectedSchool = this.schoolsDropDownList?.dropDownListData[0] ?? '';
-    localStorage.setItem('selectedSchool', this.selectedSchool);
+    this.selectedSchool = localStorage.getItem('selectedSchool') ?? '';
+    if (this.selectedSchool == '') {
+      if (this.schoolsDropDownList.dropDownListData != undefined)
+        this.selectedSchool = this.schoolsDropDownList?.dropDownListData[0] ?? '';
+      localStorage.setItem('selectedSchool', this.selectedSchool);
+    }
 
     this.dataFilteredByDropDownLists = this.chartDataService.getFilteredObjectsFromData(this.selectedCountry, this.selectedCamp, this.selectedSchool);
   }

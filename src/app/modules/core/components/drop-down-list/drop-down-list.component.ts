@@ -11,10 +11,22 @@ import { DropDownList } from '../../models/dropDownList';
 export class DropDownListComponent implements OnInit {
   //props
   @Input() dropDownList: DropDownList = {};
+  selectedValue: string = '';
 
   constructor(private chartDataService: ChartDataService) { }
 
   ngOnInit(): void {
+    switch (this.dropDownList.dropDownTypeToBeReflectedOn) {
+      case DropDownListTypesEnum.CountriesDropDown:
+        this.selectedValue = localStorage.getItem('selectedCountry') ?? '';
+        break;
+      case DropDownListTypesEnum.CampsDropDown:
+        this.selectedValue = localStorage.getItem('selectedCamp') ?? '';
+        break;
+      case DropDownListTypesEnum.SchoolsDropDown:
+        this.selectedValue = localStorage.getItem('selectedSchool') ?? '';
+        break;
+    }
   }
 
   get DropDownListTypesEnum(): typeof DropDownListTypesEnum {
@@ -22,6 +34,7 @@ export class DropDownListComponent implements OnInit {
   }
 
   dropDownChanged(dropDownListChangedValue: any) {
+    this.selectedValue = dropDownListChangedValue.value;
     switch (this.dropDownList.dropDownTypeToBeReflectedOn) {
       case DropDownListTypesEnum.CountriesDropDown:
         this.getCampsForSelectedCountry(dropDownListChangedValue.value);
