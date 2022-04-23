@@ -1,1 +1,27 @@
-<p>chart-point-details works!</p>
+<div *ngIf="chartPointDetails.id!=''">
+    <h4>Chart Point Details</h4>
+    <div>
+        <table>
+            <tr>
+                <td>Country:</td>
+                <td>{{chartPointDetails.country}}</td>
+            </tr>
+            <tr>
+                <td>Camp:</td>
+                <td>{{chartPointDetails.camp}}</td>
+            </tr>
+            <tr>
+                <td>School:</td>
+                <td>{{chartPointDetails.school}}</td>
+            </tr>
+            <tr>
+                <td>Lessons:</td>
+                <td>{{chartPointDetails.lessons}}</td>
+            </tr>
+            <tr>
+                <td>Month:</td>
+                <td>{{chartPointDetails.month}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

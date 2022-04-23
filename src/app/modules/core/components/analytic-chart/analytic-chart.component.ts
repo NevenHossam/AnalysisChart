@@ -53,6 +53,7 @@ export class AnalyticChartComponent implements OnInit {
         this.dataFilteredByDropDownLists = [];
       }
 
+      localStorage.setItem('chartList', JSON.stringify(this.dataFilteredByDropDownLists));
       this.mapListIntoChartDataSets();
     });
   }
@@ -62,7 +63,7 @@ export class AnalyticChartComponent implements OnInit {
 
     if (this.dataFilteredByDropDownLists.length > 0) {
       let list = this.dataFilteredByDropDownLists.map(obj => {
-        return ({ data: { x: obj.month, y: obj.lessons }, label: obj.school });
+        return ({ data: { x: obj.month, y: obj.lessons, id: obj.school }, label: obj.school });
       });
 
       chartMappedList.push({ data: [list[0].data], label: list[0].label, hidden: false });
@@ -138,8 +139,24 @@ export class AnalyticChartComponent implements OnInit {
 
   // events
   onChartClick = ($event: any) => {
-    window.console.log('onChartClick', $event);
+    let activatedPoints: any = this.lineChart.getElementAtEvent($event);
+    let clickedPoint = activatedPoints[0];
+    let labelOfClickedPoint: any;
+    if (clickedPoint) {
+      // if (this.lineChart.data.labels != undefined)
+      //   var label = this.lineChart.data.labels[clickedPoint._index];
+      if (this.lineChart.data.datasets != undefined) {
+        if (this.lineChart.data.datasets[clickedPoint?._datasetIndex] != undefined) {
+          let pointWithLabel = this.lineChart.data.datasets[clickedPoint._datasetIndex];
+          if (pointWithLabel.data != undefined)
+            labelOfClickedPoint = pointWithLabel.data[clickedPoint._index];
+          this.chartDataService.pointInLineClickedInChart.emit({ label: pointWithLabel.label, x: labelOfClickedPoint.x, y: labelOfClickedPoint.y });
+        }
+      }
+
+    }
   };
+
 
   chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
     console.log(event, active);
