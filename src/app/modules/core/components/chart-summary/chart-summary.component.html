@@ -5,10 +5,19 @@
         <hr>
         <div *ngFor="let item of summaryChart?.schoolWithLesson">
             <span>
-                <input type="radio" (click)="ShowOrHideChartLine(item.schoolName)">
-                <p class="card-text">{{item.totalLessonsNumberOfThisSchool}} Lessons</p>
+                <div class="radio-list">
+                    <label class="radio" for="radio__toggle1">
+                      <input class="radio__toggle" id="radio__toggle1" type="checkbox" (click)="ShowOrHideChartLine(item.schoolName)">
+                      <span class="radio__span">
+                        {{item.totalLessonsNumberOfThisSchool}} Lessons
+                      </span>
+                    </label>
+                  </div>
+                <!-- <input type="radio"  (click)="ShowOrHideChartLine(item.schoolName)">
+                <p class="card-text">{{item.totalLessonsNumberOfThisSchool}} Lessons</p> -->
             </span>
             <p class="card-text">in {{item.schoolName}}</p>
         </div>
     </div>
 </div>
+

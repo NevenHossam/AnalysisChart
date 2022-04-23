@@ -1,9 +1,9 @@
 body.dark-mode {
-    background-color: #5e6262;
-    color: #dfe6e9;
+    background-color: #565858;
+    color: #9a9dac;
 }
 
 body.light-mode {
-    background-color: #d6eef8;
-    color: #2d3436;
+    background-color: #e1f0f7;
+    color: #000000;
 }

@@ -1,4 +1,5 @@
 export interface SchoolWithLesson {
     schoolName: string,
-    totalLessonsNumberOfThisSchool: number
+    totalLessonsNumberOfThisSchool: number,
+    schoolChecked?: boolean
 }
