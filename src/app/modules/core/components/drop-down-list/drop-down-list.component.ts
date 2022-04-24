@@ -11,7 +11,7 @@ import { DropDownList } from '../../models/dropDownList';
 export class DropDownListComponent implements OnInit {
   //props
   @Input() dropDownList: DropDownList = {};
-  selectedValue: string = '';
+  @Input() selectedValue: string = '';
 
   constructor(private chartDataService: ChartDataService) { }
 
@@ -23,7 +23,7 @@ export class DropDownListComponent implements OnInit {
     return DropDownListTypesEnum;
   }
 
-  setSelectedValue(){
+  setSelectedValue() {
     switch (this.dropDownList.dropDownTypeToBeReflectedOn) {
       case DropDownListTypesEnum.CountriesDropDown:
         this.selectedValue = localStorage.getItem('selectedCountry') ?? '';
@@ -50,6 +50,7 @@ export class DropDownListComponent implements OnInit {
         this.schooleChanged(dropDownListChangedValue.value);
         break;
     }
+    
     this.setSelectedValue();
   }
 

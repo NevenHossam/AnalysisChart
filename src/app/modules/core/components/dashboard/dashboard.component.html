@@ -1,20 +1,24 @@
 <div class="row">
+
+</div>
+
+<div class="row">
     <div class="col-md-3">
         <!-- Countries DropDown List -->
         <label>Select Country</label>
-        <app-drop-down-list [dropDownList]="countriesDropDownList"></app-drop-down-list>
+        <app-drop-down-list [dropDownList]="countriesDropDownList" [selectedValue]="this.selectedCountry"></app-drop-down-list>
     </div>
 
     <div class="col-md-3">
         <!-- Camps DropDown List -->
         <label>Select Camp</label>
-        <app-drop-down-list [dropDownList]="campsDropDownList"></app-drop-down-list>
+        <app-drop-down-list [dropDownList]="campsDropDownList" [selectedValue]="this.selectedCamp"></app-drop-down-list>
     </div>
 
     <div class="col-md-3">
         <!-- Schools DropDown List -->
         <label>Select School</label>
-        <app-drop-down-list [dropDownList]="schoolsDropDownList"></app-drop-down-list>
+        <app-drop-down-list [dropDownList]="schoolsDropDownList" [selectedValue]="this.selectedSchool"></app-drop-down-list>
     </div>
 </div>
 

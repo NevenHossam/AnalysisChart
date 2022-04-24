@@ -55,14 +55,14 @@ export class DashboardComponent implements OnInit, AfterContentChecked {
         this.selectedCamp = this.campsDropDownList?.dropDownListData[0] ?? '';
       localStorage.setItem('selectedCamp', this.selectedCamp);
     }
+    this.schoolsDropDownList.dropDownListData = [];
+    this.schoolsDropDownList.dropDownListData.push('Show All');
     this.schoolsDropDownList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(this.selectedCamp);
-    // this.schoolsDropDownList.dropDownListData.push('Show All');
 
     this.selectedSchool = localStorage.getItem('selectedSchool') ?? '';
     if (this.selectedSchool == '') {
-      // if (this.schoolsDropDownList.dropDownListData != undefined)
-      //   this.selectedSchool = this.schoolsDropDownList?.dropDownListData[0] ?? '';
-      this.selectedSchool = 'Show All';
+      if (this.schoolsDropDownList.dropDownListData != undefined)
+        this.selectedSchool = this.schoolsDropDownList?.dropDownListData[0] ?? '';
       localStorage.setItem('selectedSchool', this.selectedSchool);
     }
 
@@ -118,9 +118,10 @@ export class DashboardComponent implements OnInit, AfterContentChecked {
   }
 
   changeSchoolsListBasedOnCampsValue() {
+    this.schoolsDropDownList.dropDownListData = [];
+    this.schoolsDropDownList.dropDownListData.push('Show All');
     this.schoolsDropDownList.dropDownListData = this.chartDataService.getAllSchoolsOfCamp(this.selectedCamp);
-    // this.selectedSchool = this.schoolsDropDownList.dropDownListData[0] ?? '';
-    this.selectedSchool = 'Show All';
+    this.selectedSchool = this.schoolsDropDownList.dropDownListData[0] ?? '';
     localStorage.setItem('selectedSchool', this.selectedSchool);
   }
 
