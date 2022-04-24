@@ -3,7 +3,6 @@ import { ChartObject } from '../models/chartObject';
 import { ChartSummary } from '../models/chartSummary';
 import { DropDownList } from '../models/dropDownList';
 import chartData from '../data/data.json';
-import { DropDownListTypesEnum } from '../enums/dropDownListType';
 
 @Injectable({
   providedIn: 'root'
