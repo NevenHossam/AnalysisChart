@@ -1,12 +1,11 @@
 
-import { Component, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import Chart, { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import 'chart.js';
-import { ChartObject } from '../../models/chartObject';
 import { ChartDataService } from 'src/app/modules/shared/services/chart-data.service';
-import { chart, color } from 'highcharts';
 import { Router } from '@angular/router';
+import { ChartObject } from 'src/app/modules/shared/models/chartObject';
 @Component({
   selector: 'app-analytic-chart',
   templateUrl: './analytic-chart.component.html',
