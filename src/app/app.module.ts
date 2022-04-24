@@ -22,14 +22,14 @@ import { RouterModule } from '@angular/router';
     DashboardComponent,
     ChartSummaryComponent,
     ChartPointDetailsComponent
-        
+
   ],
-  imports: [  
-    ChartsModule, 
+  imports: [
+    ChartsModule,
     BrowserModule,
     AppRoutingModule,
-  RouterModule
-      ],
+    RouterModule.forRoot([])
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

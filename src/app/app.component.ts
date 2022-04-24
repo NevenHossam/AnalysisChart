@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements OnDestroy {
   darkMode$: Observable<boolean> = this.darkModeService.darkMode$;
-  title: string = 'Analytic Chart';
+  title: string = 'AnalysisChart';
   constructor(private darkModeService: DarkModeService) { }
 
   ngOnDestroy(): void {

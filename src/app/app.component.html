@@ -1,16 +1,10 @@
 <div class="container">
-   
-    
     <div class="switch">
-        
-           
-
-            <label class="">
-                <input  [checked]="darkMode$ | async" (change)="toggleTheme()" type="checkbox">
-                <span class="slider round">  </span>       
-              </label>
-      
+        <label class="">
+            <input [checked]="darkMode$ | async" (change)="toggleTheme()" type="checkbox">
+            <span class="slider round"> </span>
+        </label>
     </div>
-   
+
     <router-outlet></router-outlet>
 </div>
