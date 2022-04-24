@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
 import { DarkModeService } from 'angular-dark-mode';
-import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { Observable } from 'rxjs';
 @Component({
   selector: 'app-root',
@@ -9,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements OnDestroy {
   darkMode$: Observable<boolean> = this.darkModeService.darkMode$;
-
+  title: string = 'Analytic Chart';
   constructor(private darkModeService: DarkModeService) { }
 
   ngOnDestroy(): void {

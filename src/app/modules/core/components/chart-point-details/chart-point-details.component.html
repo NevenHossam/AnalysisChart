@@ -1,32 +1,51 @@
 <div class="container">
-    <button class="btn" [routerLink]="'/dashboard'"><i class="fa fa-arrow-left" >Back</i></button>
 
-    <div class="card" *ngIf="chartPointDetails.id!=''">
-        <h5 class="card-title text-center">Chart Point Details</h5>
+  
+
+    <div class="card" >
+        <div class="row">
+            <div class="col-md-6">
+                <h5 class="card-title">Chart Point Details</h5>
+
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-primary bkBtn" [routerLink]="'/dashboard'"><i class="fa fa-arrow-left" ></i>
+                    Back </button>
+            </div>
+        </div>
         <hr>
-        <div class="card-body">
-            <table>
-                <tr>
-                    <td class="card-text">Country:</td>
-                    <td class="card-text">{{chartPointDetails.country}}</td>
-                </tr>
-                <tr>
-                    <td class="card-text">Camp:</td>
-                    <td class="card-text">{{chartPointDetails.camp}}</td>
-                </tr>
-                <tr>
-                    <td class="card-text">School:</td>
-                    <td class="card-text">{{chartPointDetails.school}}</td>
-                </tr>
-                <tr>
-                    <td class="card-text">Lessons:</td>
-                    <td class="card-text">{{chartPointDetails.lessons}}</td>
-                </tr>
-                <tr>
-                    <td class="card-text">Month:</td>
-                    <td class="card-text">{{chartPointDetails.month}}</td>
-                </tr>
-            </table>
+        <div class="card-body" *ngIf="chartPointDetails.id!=''">
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">Country</label>
+                  <input type="text" readonly value="{{chartPointDetails.country}}" class="form-control" >
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputPassword4">Camp</label>
+                  <input type="text" readonly value="{{chartPointDetails.camp}}" class="form-control" >
+                </div>
+              </div>
+
+              
+            <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">School</label>
+                  <input type="text" readonly value="{{chartPointDetails.school}}" class="form-control" >
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputPassword4">Lessons</label>
+                  <input type="text" readonly value="{{chartPointDetails.lessons}}" class="form-control" >
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">Month</label>
+                  <input type="text" readonly value="{{chartPointDetails.month}}" class="form-control" >
+                </div>
+            
+              </div>           
         </div>
     </div>
 </div>
+

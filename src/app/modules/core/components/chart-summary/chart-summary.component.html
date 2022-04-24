@@ -1,21 +1,25 @@
-<div class="card" *ngIf="summaryChart.schoolWithLesson!=[]">
-    <div class="card-body">
-        <h5 class="card-title text-center">{{summaryChart?.totalNumberOfLessons}} Lessons</h5>
-        <h6 class="card-title text-center">in {{summaryChart?.selectedCamp}}</h6>
-        <hr>
+<div class="" *ngIf="summaryChart.schoolWithLesson!=[]">
+  
+  <div class="summary_Header">
+        <h5 class="card-title ">{{summaryChart?.totalNumberOfLessons}} Lessons</h5>
+        <h6 class="card-text ">in {{summaryChart?.selectedCamp}}</h6>
+      </div>
         <div *ngFor="let item of summaryChart?.schoolWithLesson">
             <span>
                 <div class="radio-list">
-                    <label class="radio" for="radio__toggle1">
-                      <input class="radio__toggle" id="radio__toggle1" type="checkbox" (click)="ShowOrHideChartLine(item.schoolName)">
+                    <label class="radio" [for]="item.schoolName">
+                      
+         
+                      <input class="radio__toggle" checked="checked" type="checkbox" (click)="ShowOrHideChartLine(item.schoolName)">
                       <span class="radio__span">
                         {{item.totalLessonsNumberOfThisSchool}} Lessons
+                         <p class="card-text">in {{item.schoolName}}</p>
                       </span>
                     </label>
                   </div>
             </span>
-            <p class="card-text">in {{item.schoolName}}</p>
+           
         </div>
-    </div>
+
 </div>
 
