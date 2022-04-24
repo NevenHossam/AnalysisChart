@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { ChartObject } from '../../core/models/chartObject';
-import { ChartSummary } from '../../core/models/chartSummary';
-import { DropDownList } from '../../core/models/dropDownList';
+import { ChartObject } from '../models/chartObject';
+import { ChartSummary } from '../models/chartSummary';
+import { DropDownList } from '../models/dropDownList';
 import chartData from '../data/data.json';
 import { DropDownListTypesEnum } from '../enums/dropDownListType';
 

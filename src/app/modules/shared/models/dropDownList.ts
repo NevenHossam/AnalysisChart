@@ -1,4 +1,4 @@
-import { DropDownListTypesEnum } from "../../shared/enums/dropDownListType";
+import { DropDownListTypesEnum } from "../enums/dropDownListType";
 import { ChartObject } from "./chartObject";
 
 export interface DropDownList {

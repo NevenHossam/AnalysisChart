@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DropDownListTypesEnum } from 'src/app/modules/shared/enums/dropDownListType';
 import { ChartDataService } from 'src/app/modules/shared/services/chart-data.service';
-import { DropDownList } from '../../models/dropDownList';
+import { DropDownList } from '../../../shared/models/dropDownList';
 
 @Component({
   selector: 'app-drop-down-list',

@@ -1,18 +1,3 @@
 <div class="chartjs-container" width="100%" height="20%">
-  <!-- <canvas baseChart 
-      id="lineChart"
-      [datasets]="lineChartData" 
-      [labels]="lineChartLabels" 
-      [options]="lineChartOptions"
-      [colors]="lineChartColors" 
-      [legend]="lineChartLegend" 
-      [chartType]="lineChartType" 
-      [plugins]="lineChartPlugins"
-     
-      width="100%" height="60" 
-      (chartClick)="onChartClick(this)"
-      >
-  </canvas> -->
-
   <canvas baseChart id="lineChart" (click)="onChartClick($event)"></canvas>
 </div>

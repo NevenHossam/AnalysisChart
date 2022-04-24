@@ -1,9 +1,8 @@
-import { AfterContentChecked, AfterViewChecked, AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, OnInit } from '@angular/core';
 import { DropDownListTypesEnum } from 'src/app/modules/shared/enums/dropDownListType';
 import { ChartDataService } from 'src/app/modules/shared/services/chart-data.service';
-import { ChartObject } from '../../models/chartObject';
-import { ChartSummary } from '../../models/chartSummary';
-import { DropDownList } from '../../models/dropDownList';
+import { ChartObject } from '../../../shared/models/chartObject';
+import { DropDownList } from '../../../shared/models/dropDownList';
 
 @Component({
   selector: 'app-dashboard',

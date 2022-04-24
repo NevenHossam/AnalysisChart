@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataService } from 'src/app/modules/shared/services/chart-data.service';
-import { ChartSummary } from '../../models/chartSummary';
+import { ChartSummary } from '../../../shared/models/chartSummary';
 
 @Component({
   selector: 'app-chart-summary',
@@ -35,6 +35,4 @@ export class ChartSummaryComponent implements OnInit {
   ShowOrHideChartLine(schoolName: string) {
     this.chartDataService.labelToHideOrToShow.emit(schoolName);
   }
-
-
 }

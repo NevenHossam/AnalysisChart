@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnDestroy {
-  title = 'AnalysisChart';
   darkMode$: Observable<boolean> = this.darkModeService.darkMode$;
 
   constructor(private darkModeService: DarkModeService) { }

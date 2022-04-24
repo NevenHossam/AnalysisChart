@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChartDataService } from 'src/app/modules/shared/services/chart-data.service';
-import { ChartObject } from '../../models/chartObject';
+import { ChartObject } from '../../../shared/models/chartObject';
 
 @Component({
   selector: 'app-chart-point-details',
